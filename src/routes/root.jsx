@@ -1,13 +1,13 @@
 import { Outlet, Link, useLoaderData, Form } from "react-router-dom";
 import { getContacts, createContact  } from "../contacts";
 
-export async function action() {
+export async function action() { // simulateing network delay
   const contact = await createContact();
   return { contact };
 }
 
-export async function loader() {
-  const contacts = await getContacts();
+export async function loader({ params }) {
+  const contacts = await getContacts(params.contactId);
   return { contacts };
 }
 
