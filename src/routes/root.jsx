@@ -1,4 +1,4 @@
-import { Outlet, NavLink, Link, useLoaderData, Form, redirect} from "react-router-dom";
+import { Outlet, NavLink, Link, useLoaderData, Form, redirect ,useNavigation} from "react-router-dom";
 import { getContacts, createContact  } from "../contacts";
 
 export async function action() {
@@ -13,45 +13,20 @@ export async function loader({ params }) {
 
 export default function Root() {
   const { contacts } = useLoaderData();
+  const navigation = useNavigation();
+
   return (
     <>
       <div id="sidebar">
         <h1>React Router Contacts</h1>
-        <div>
-          {/* other code */}
-          <Form method="post">
-            <button type="submit">New</button>
-          </Form>
-        </div>
-
-        <nav>
-          {contacts.length ? (
-            <ul>
-              {contacts.map((contact) => (
-                <li key={contact.id}>
-                  <NavLink
-                    to={`contacts/${contact.id}`}
-                    className={({ isActive, isPending }) =>
-                      isActive
-                        ? "active"
-                        : isPending
-                        ? "pending"
-                        : ""
-                    }
-                  >
-                    {/* other code */}
-                  </NavLink>
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p>{/* other code */}</p>
-          )}
-        </nav>
-      <div id="detail">
-        <Outlet />{/*Where we render the child routes for root */}
       </div>
-
+      <div
+        id="detail"
+        className={
+          navigation.state === "loading" ? "loading" : ""
+        }
+      >
+        <Outlet />
       </div>
     </>
   );
