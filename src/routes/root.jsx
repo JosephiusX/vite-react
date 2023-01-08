@@ -10,6 +10,7 @@ import {
 import { getContacts, createContact } from "../contacts";
 import { useEffect } from "react";
 
+
 export async function action() {
   const contact = await createContact();
   return { contact };

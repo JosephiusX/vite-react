@@ -1,4 +1,8 @@
-import { Form, useLoaderData } from "react-router-dom";
+import { 
+  Form,
+  useLoaderData,
+  useFetcher
+ } from "react-router-dom";
 import { getContact, updateContact } from "../contacts";
 
 export async function loader({ params }) {
@@ -75,10 +79,11 @@ export default function Contact() {
 }
 
 function Favorite({ contact }) {
-  // yes, this is a `let` for later
-  let favorite = contact.favorite;
+  const fetcher = useFetcher();
+  let favorite = contact.favorite; // yes, this is a `let` for later
+  
   return (
-    <Form method="post">
+    <fetcher.Form method="post">
       <button
         name="favorite"
         value={favorite ? "false" : "true"}
@@ -90,18 +95,6 @@ function Favorite({ contact }) {
       >
         {favorite ? "★" : "☆"}
       </button>
-    </Form>
+    </fetcher.Form>
   );
 }
-
-// export default function Contact() {
-//   const contact = {
-//     first: "Your",
-//     last: "Name",
-//     avatar: "https://placekitten.com/g/200/200",
-//     twitter: "your_handle",
-//     notes: "Some notes",
-//     favorite: true,
-//   };
-
-  
